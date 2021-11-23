@@ -1,0 +1,28 @@
+{
+  "name": "product-info-api",
+  "version": "1.0.0",
+  "description": "back end api server and database for product information.",
+  "main": "server",
+  "scripts": {
+    "start": "nodemon server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prospero-Unity/product-info-api.git"
+  },
+  "author": "Cameron McCurdy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Prospero-Unity/product-info-api/issues"
+  },
+  "homepage": "https://github.com/Prospero-Unity/product-info-api#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13",
+    "nodemon": "^2.0.15",
+    "pg": "^8.7.1",
+    "pg-promise": "^10.11.1"
+  }
+}
