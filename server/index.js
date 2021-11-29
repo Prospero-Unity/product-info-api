@@ -12,8 +12,7 @@ app.get('/products', async (req, res) => {
     res.status(200).send(results.rows);
   } catch (err) {
     console.log(err);
-    res.status(200).send('this is working');
-    // res.sendStatus(400);
+    res.sendStatus(400);
   }
 });
 
