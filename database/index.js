@@ -12,7 +12,7 @@ db.connect((err) => {
   if (err) {
     console.log(err);
   } else {
-    console.log('connected on 8000');
+    console.log('connected on 5432');
   }
 });
 
