@@ -1,6 +1,5 @@
 const express = require('express');
 const db = require('../database');
-const stylesFormatter = require('../stylesFormatter.js');
 const app = express();
 app.use(express.json());
 var port = process.env.PORT || 3000;
@@ -33,18 +32,22 @@ app.get('/products/:product_id', async (req, res) => {
 app.get('/products/:product_id/styles', async (req, res) => {
   var results = req.params;
   try {
-    const { rows } = await db.query(`SELECT style_id, name, original_price, sale_price, "default?" FROM styles WHERE product_id = ${results['product_id']}`);
-    var styleIds = rows.map(style => style['style_id']);
+    const { rows } = await db.query(`SELECT row_to_json(style) AS results
+    FROM (
+      SELECT a.style_id, a.name, a.original_price, a.sale_price, a."default\?",
+      (SELECT json_agg(photos)
+        FROM (
+        SELECT photos.url, photos.thumbnail_url FROM photos WHERE photos.style_id = a.style_id)
+      photos) AS photos,
+     (SELECT json_object_agg(
+       s.id, (SELECT json_build_object('quantity', s.quantity, 'size', s.size)
+       FROM skus LIMIT 1)
+     ) skus
+     FROM skus s WHERE s.style_id=a.style_id)
+     FROM styles AS a)
+      style WHERE style_id=${results['product_id']};`);
 
-    var photos = db.query(`SELECT json_agg(json_build_object('style_id', style_id, 'thumbnail_url', thumbnail_url, 'url' , url)) AS photos FROM photos WHERE style_id >= ${styleIds[0]} AND style_id <= ${styleIds[styleIds.length - 1]}`);
-
-    var skus = db.query(`SELECT * FROM skus WHERE style_id >= ${styleIds[0]} AND style_id <= ${styleIds[styleIds.length - 1]}`);
-
-    let style = await Promise.all([photos, skus]);
-    photos = style[0].rows[0].photos;
-    skus = style[1].rows;
-
-    results.results = stylesFormatter(rows, photos, skus);
+    results.results = rows[0].results;
     res.status(200).send(results);
   } catch (err) {
     console.log(err);
