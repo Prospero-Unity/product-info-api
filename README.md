@@ -25,7 +25,7 @@ Lightweight, scalable microservice serving a growing ecommerce front-end
 
 ![nginx](https://www.vectorlogo.zone/logos/nginx/nginx-ar21.svg)
 
-- NGINX enables load balancing HTTP traffic between between many routers
+- NGINX enables load balancing HTTP traffic between between many routers. Also offers a sweet memory caching feature.
 
 ---
 
