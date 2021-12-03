@@ -32,5 +32,4 @@ Lightweight, scalable microservice serving a growing ecommerce front-end
 ### System Architecture
 This design is most optimal between 1 - 6000 RPS. This design provided a lower server cost by utilizing horizontal scaling with a load balancer to distribute our api calls across the servers. This design also makes use of a memory cache to reduce the datbase load. 
 
-![](https://i.imgur.com/mGDWrVG.png)
 
